@@ -163,3 +163,64 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   window.task_form = task_form;
+
+  // Окно задач
+  const task_window = document.createElement('section');
+  task_window.classList.add('task-window');
+  main_container.appendChild(task_window);
+
+  // Список задач
+  const task_list = document.createElement('ul');
+  task_list.classList.add('task-list');
+  task_window.appendChild(task_list);
+  
+  updateTasks();
+
+// TASKS DISPLAY
+function updateTasks() {
+  listTasks();
+}
+
+function listTasks() {
+  let listUL = document.querySelector('.task-list');
+  if (!listUL) return;
+  
+  let listUL_clone = listUL.cloneNode(false);
+  let sortedTaskList = getSortedTaskList(sorttype);
+  
+  for (let task of sortedTaskList) {
+    let taskElem = document.createElement('li');
+    taskElem.setAttribute('index', task.id);
+    setTaskDOM(task, taskElem);
+    listUL_clone.appendChild(taskElem);
+  }
+  
+  listUL.parentNode.replaceChild(listUL_clone, listUL);
+}
+
+function setTaskDOM(task, taskElem) {
+  let task_card = document.createElement('div');
+  task_card.classList.add('task__card');
+  taskElem.appendChild(task_card);
+
+  let task_info = document.createElement('div');
+  task_info.classList.add('task__info');
+  task_card.appendChild(task_info);
+  
+  let task_name = document.createElement('span');
+  task_name.textContent = task.name;
+  task_name.title = task.name;
+  task_info.appendChild(task_name);
+  
+  let task_date = document.createElement('span');
+  task_date.textContent = task.date;
+  task_info.appendChild(task_date);
+
+  let task_bottom = document.createElement('div');
+  task_bottom.classList.add('task__bottom');
+  task_card.appendChild(task_bottom);
+
+  let task_id = document.createElement('span');
+  task_id.textContent = '#' + task.id;
+  task_bottom.appendChild(task_id);
+}
