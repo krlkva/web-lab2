@@ -1,1 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
 
+body {
+    background-color: #fafafa;
+    color: #1a1a1a;
+    padding: 20px;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+header {
+    background: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.site-name {
+    font-size: 36px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -1px;
+}
+
+footer {
+    background: white;
+    border: 3px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    margin-top: 20px;
+}
