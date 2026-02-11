@@ -16,3 +16,61 @@ let taskList = [
 let sorttype = "date";
 let nameFilter = "";
 let statusFilter = [1, 1, 0];
+
+// SORTING FUNCTIONS
+function compareID(a, b) {
+  if (a.id > b.id) return 1;
+  if (a.id < b.id) return -1;
+  return 0;
+}
+
+function compareIDInv(a, b) {
+  if (a.id < b.id) return 1;
+  if (a.id > b.id) return -1;
+  return 0;
+}
+
+function compareDate(a, b) {
+  if (a.date > b.date) return 1;
+  if (a.date < b.date) return -1;
+  return 0;
+}
+
+function compareDateInv(a, b) {
+  if (a.date > b.date) return -1;
+  if (a.date < b.date) return 1;
+  return 0;
+}
+
+function compareStatus(a, b) {
+  if (a.status < b.status) return 1;
+  if (a.status > b.status) return -1;
+  return 0;
+}
+
+function compareStatusInv(a, b) {
+  if (a.status < b.status) return -1;
+  if (a.status > b.status) return 1;
+  return 0;
+}
+
+function getSortedTaskList(sorttype) {
+  let sortedTaskList = structuredClone(taskList);
+  switch (sorttype) {
+    case "date":
+      sortedTaskList = sortedTaskList.sort(compareDate);
+      break;
+    case "dateinv":
+      sortedTaskList = sortedTaskList.sort(compareDateInv);
+      break;
+    case "id":
+      sortedTaskList = sortedTaskList.sort(compareID);
+      break;
+    case "idinv":
+      sortedTaskList = sortedTaskList.sort(compareIDInv);
+      break;
+    default:
+      sortedTaskList = sortedTaskList.sort(compareID);
+  }
+  return sortedTaskList;
+}
