@@ -41,3 +41,55 @@ footer {
     color: #666;
     margin-top: 20px;
 }
+
+.add-task-window {
+    background: white;
+    border: 3px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.task-form h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.task-form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.task-form label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+}
+
+.task-form input[type="text"],
+.task-form input[type="date"] {
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.task-form input[type="submit"] {
+    padding: 12px 24px;
+    border: 2px solid #1a1a1a;
+    background: #1a1a1a;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+}
