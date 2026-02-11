@@ -74,3 +74,43 @@ function getSortedTaskList(sorttype) {
   }
   return sortedTaskList;
 }
+
+// PAGE SETUP
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Создаю структуру страницы...');
+  
+  const page = document.body;
+  const header = document.createElement('header');
+  const main = document.createElement('main');
+  const footer = document.createElement('footer');
+  
+  page.appendChild(header);
+  page.appendChild(main);
+  page.appendChild(footer);
+
+  // Шапка
+  const header_nav = document.createElement('nav');
+  header.appendChild(header_nav);
+  const header_nav_list = document.createElement('ul');
+  header_nav.appendChild(header_nav_list);
+  header_nav_list.style.listStyle = 'none';
+  header_nav_list.style.display = 'flex';
+  header_nav_list.style.justifyContent = 'center';
+
+  const header_logo = document.createElement('li');
+  header_nav_list.appendChild(header_logo);
+  const header_title = document.createElement('h1');
+  header_title.textContent = "ToDo List";
+  header_title.className = 'site-name';
+  header_logo.appendChild(header_title);
+
+  // Подвал
+  const footer_text = document.createElement('span');
+  footer_text.textContent = 'ToDo List 2026';
+  footer.appendChild(footer_text);
+
+  // Основной контейнер
+  const main_container = document.createElement('div');
+  main_container.classList.add('main-container');
+  main.appendChild(main_container);
+});
