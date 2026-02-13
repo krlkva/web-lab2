@@ -54,6 +54,14 @@ function compareStatusInv(a, b) {
   return 0;
 }
 
+// TASKS DISPLAY
+function updateTasks() {
+  taskList = getSortedTaskList('id');
+  localStorage.setItem('tasklist-test', JSON.stringify(taskList)); 
+  localStorage.setItem('sorttype', JSON.stringify(sorttype)); 
+  listTasks();
+}
+
 function getSortedTaskList(sorttype) {
   let sortedTaskList = structuredClone(taskList);
   switch (sorttype) {
@@ -73,6 +81,32 @@ function getSortedTaskList(sorttype) {
       sortedTaskList = sortedTaskList.sort(compareID);
   }
   return sortedTaskList;
+}
+
+function listTasks() {
+  let listUL = document.querySelector('.task-list');
+  if (!listUL) return;
+  
+  let listUL_clone = listUL.cloneNode(false);
+  let sortedTaskList = getSortedTaskList(sorttype);
+  
+  for (let task of sortedTaskList) {
+    // Фильтр по названию
+    if (task.name.toUpperCase().indexOf(nameFilter.toUpperCase()) === -1) {
+      continue;
+    }
+    if (statusFilter[task.status-1] == 0) {
+    continue;
+    }
+    
+    let taskElem = document.createElement('li');
+    taskElem.setAttribute('index', task.id);
+    setTaskDOM(task, taskElem);
+    setTaskListeners(task, taskElem);
+    listUL_clone.appendChild(taskElem);
+  }
+  
+  listUL.parentNode.replaceChild(listUL_clone, listUL);
 }
 
 // ADD TASK
@@ -315,7 +349,6 @@ document.addEventListener('DOMContentLoaded', function() {
   task_settings.classList.add('task-settings');
   task_window.appendChild(task_settings);
 
-    // Добавить в task_settings_left
   const task_settings_left = document.createElement('div');
   task_settings_left.classList.add('task-settings__left');
   task_settings.appendChild(task_settings_left);
@@ -471,40 +504,19 @@ document.addEventListener('DOMContentLoaded', function() {
   
   updateTasks();
 
-// TASKS DISPLAY
-function updateTasks() {
-  taskList = getSortedTaskList('id');
-  localStorage.setItem('tasklist-test', JSON.stringify(taskList)); 
-  localStorage.setItem('sorttype', JSON.stringify(sorttype)); 
-  listTasks();
-}
-
-function listTasks() {
-  let listUL = document.querySelector('.task-list');
-  if (!listUL) return;
-  
-  let listUL_clone = listUL.cloneNode(false);
-  let sortedTaskList = getSortedTaskList(sorttype);
-  
-  for (let task of sortedTaskList) {
-    // Фильтр по названию
-    if (task.name.toUpperCase().indexOf(nameFilter.toUpperCase()) === -1) {
-      continue;
-    }
-    if (statusFilter[task.status-1] == 0) {
-    continue;
-    }
-    
-    let taskElem = document.createElement('li');
-    taskElem.setAttribute('index', task.id);
-    setTaskDOM(task, taskElem);
-    setTaskListeners(task, taskElem);
-    listUL_clone.appendChild(taskElem);
+  // Загрузка из localStorage
+  if (localStorage.getItem('tasklist-test')) {
+    taskList = JSON.parse(localStorage.getItem('tasklist-test'));
   }
   
-  listUL.parentNode.replaceChild(listUL_clone, listUL);
-}
+  if (localStorage.getItem('sorttype')) {
+    sorttype = JSON.parse(localStorage.getItem('sorttype'));
+  }
 
+  updateSortButtons();
+  updateTasks();
+
+// Функции для отображения задач
 function setTaskDOM(task, taskElem) {
   let task_card = document.createElement('div');
   task_card.classList.add('task__card');
