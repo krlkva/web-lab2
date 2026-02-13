@@ -178,6 +178,15 @@ function removeEditForm() {
   }
 }
 
+// CHANGE STATUS
+function changeTaskStatus(id, newStatus) {
+  let item = taskList.find(item => item.id === parseInt(id));
+  if (item === undefined) return;
+  
+  item.status = newStatus;
+  updateTasks();
+}
+
 // PAGE SETUP
 document.addEventListener('DOMContentLoaded', function() {
    // Создание структуры страницы
@@ -321,6 +330,78 @@ function setTaskDOM(task, taskElem) {
   task_date.textContent = task.date;
   task_info.appendChild(task_date);
 
+  let task_status_form = document.createElement('form');
+  task_status_form.classList.add('task-status__form');
+  task_card.appendChild(task_status_form);
+  
+  let task_status_fieldset = document.createElement('fieldset');
+  task_status_form.appendChild(task_status_fieldset);
+
+  let task_status_legend = document.createElement('legend');
+  task_status_legend.textContent = 'Статус';
+  task_status_fieldset.appendChild(task_status_legend);
+
+  // Новые
+  let task_status_new = document.createElement('div');
+  task_status_fieldset.appendChild(task_status_new);
+  let task_status_new_input = document.createElement('input');
+  task_status_new_input.type = 'radio';
+  task_status_new_input.name = 'task-status';
+  task_status_new_input.id = 'task-status__new-' + task.id;
+  task_status_new_input.value = 1;
+  task_status_new.appendChild(task_status_new_input);
+  let task_status_new_label = document.createElement('label');
+  task_status_new_label.htmlFor = 'task-status__new-' + task.id;
+  task_status_new_label.textContent = 'новые';
+  task_status_new.appendChild(task_status_new_label);
+
+  // В процессе
+  let task_status_inprogress = document.createElement('div');
+  task_status_fieldset.appendChild(task_status_inprogress);
+  let task_status_inprogress_input = document.createElement('input');
+  task_status_inprogress_input.type = 'radio';
+  task_status_inprogress_input.name = 'task-status';
+  task_status_inprogress_input.id = 'task-status__inprogress-' + task.id;
+  task_status_inprogress_input.value = 2;
+  task_status_inprogress.appendChild(task_status_inprogress_input);
+  let task_status_inprogress_label = document.createElement('label');
+  task_status_inprogress_label.htmlFor = 'task-status__inprogress-' + task.id;
+  task_status_inprogress_label.textContent = 'в процессе';
+  task_status_inprogress.appendChild(task_status_inprogress_label);
+
+  // Выполнено
+  let task_status_done = document.createElement('div');
+  task_status_fieldset.appendChild(task_status_done);
+  let task_status_done_input = document.createElement('input');
+  task_status_done_input.type = 'radio';
+  task_status_done_input.name = 'task-status';
+  task_status_done_input.id = 'task-status__done-' + task.id;
+  task_status_done_input.value = 3;
+  task_status_done.appendChild(task_status_done_input);
+  let task_status_done_label = document.createElement('label');
+  task_status_done_label.htmlFor = 'task-status__done-' + task.id;
+  task_status_done_label.textContent = 'выполнено';
+  task_status_done.appendChild(task_status_done_label);
+
+  // Устанавливаем активный статус
+  switch (task.status) {
+    case 1:
+      task_status_new_input.checked = true;
+      taskElem.classList.add('task-container_new');
+      task_card.classList.add('task-status_new');
+      break;
+    case 2:
+      task_status_inprogress_input.checked = true;
+      taskElem.classList.add('task-container_inprogress');
+      task_card.classList.add('task-status_inprogress');
+      break;
+    case 3:
+      task_status_done_input.checked = true;
+      taskElem.classList.add('task-container_done');
+      task_card.classList.add('task-status_done');
+      break;
+  }
+
   let task_buttons = document.createElement('div');
   task_buttons.classList.add('task__buttons');
   task_bottom.appendChild(task_buttons);
@@ -360,3 +441,14 @@ function setTaskListeners(task, taskElem) {
     removeTask(task.id);
   });
 }
+    taskElem.querySelector('#task-status__new-' + task.id).addEventListener('change', () => {
+    changeTaskStatus(task.id, 1);
+  });
+  
+  taskElem.querySelector('#task-status__inprogress-' + task.id).addEventListener('change', () => {
+    changeTaskStatus(task.id, 2);
+  });
+  
+  taskElem.querySelector('#task-status__done-' + task.id).addEventListener('change', () => {
+    changeTaskStatus(task.id, 3);
+  });
