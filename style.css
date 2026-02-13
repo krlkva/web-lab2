@@ -293,6 +293,42 @@ footer {
     color: #ff8f00;
 }
 
+.task-settings {
+    background: white;
+    border: 3px solid #1a1a1a;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.task-settings__search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-width: 250px;
+}
+
+.task-settings__search:focus-within {
+    border-color: #1a1a1a;
+}
+
+.task-settings__search input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+    background: transparent;
+}
+
+.task-settings__search-icon i {
+    color: #666;
+    font-size: 16px;
+}
 .task-status_done .task__info span:first-child {
     color: #2e7d32;
     text-decoration: line-through;
