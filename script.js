@@ -187,6 +187,36 @@ function changeTaskStatus(id, newStatus) {
   updateTasks();
 }
 
+// SORT BUTTONS
+function updateSortButtons() {
+  let task_sort_id = document.querySelector('.task-settings__sort button:nth-child(2)');
+  let task_sort_date = document.querySelector('.task-settings__sort button:nth-child(1)');
+  
+  if (task_sort_id) {
+    task_sort_id.classList.remove('sort_active', 'sort_active-inv');
+  }
+  if (task_sort_date) {
+    task_sort_date.classList.remove('sort_active', 'sort_active-inv');
+  }
+
+  switch (sorttype) {
+    case 'id':
+      if (task_sort_id) task_sort_id.classList.add('sort_active');
+      break;
+    case 'idinv':
+      if (task_sort_id) task_sort_id.classList.add('sort_active-inv');
+      break;
+    case 'date':
+      if (task_sort_date) task_sort_date.classList.add('sort_active');
+      break;
+    case 'dateinv':
+      if (task_sort_date) task_sort_date.classList.add('sort_active-inv');
+      break;
+  }
+
+  localStorage.setItem('sorttype', JSON.stringify(sorttype)); 
+}
+
 // PAGE SETUP
 document.addEventListener('DOMContentLoaded', function() {
    // Создание структуры страницы
@@ -284,6 +314,51 @@ document.addEventListener('DOMContentLoaded', function() {
   const task_settings = document.createElement('section');
   task_settings.classList.add('task-settings');
   task_window.appendChild(task_settings);
+
+    // Добавить в task_settings_left
+  const task_settings_left = document.createElement('div');
+  task_settings_left.classList.add('task-settings__left');
+  task_settings.appendChild(task_settings_left);
+  
+  // Переносим поиск в левую часть
+  task_settings_left.appendChild(task_search);
+  
+  // Сортировка
+  const task_sort = document.createElement('section');
+  task_sort.classList.add('task-settings__sort');
+  task_settings_left.appendChild(task_sort);
+  
+  const task_sort_date = document.createElement('button');
+  task_sort_date.addEventListener('click', () => {
+    if (sorttype === 'date') {
+      sorttype = 'dateinv';
+    } else {
+      sorttype = 'date';
+    }
+    updateSortButtons();
+    listTasks();
+  });
+  task_sort.appendChild(task_sort_date);
+  
+  const task_sort_date_text = document.createElement('span');
+  task_sort_date_text.textContent = 'по дате';
+  task_sort_date.appendChild(task_sort_date_text);
+
+  const task_sort_id = document.createElement('button');
+  task_sort_id.addEventListener('click', () => {
+    if (sorttype === 'id') {
+      sorttype = 'idinv';
+    } else {
+      sorttype = 'id';
+    }
+    updateSortButtons();
+    listTasks();
+  });
+  task_sort.appendChild(task_sort_id);
+  
+  const task_sort_id_text = document.createElement('span');
+  task_sort_id_text.textContent = 'по ID';
+  task_sort_id.appendChild(task_sort_id_text);
   
   // Поиск
   const task_search = document.createElement('section');
@@ -398,7 +473,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // TASKS DISPLAY
 function updateTasks() {
+  taskList = getSortedTaskList('id');
   localStorage.setItem('tasklist-test', JSON.stringify(taskList)); 
+  localStorage.setItem('sorttype', JSON.stringify(sorttype)); 
   listTasks();
 }
 
