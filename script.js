@@ -110,10 +110,10 @@ function listTasks() {
 }
 
 // ADD TASK
-function addTask() {
+function addTask(){
   let data = new FormData(task_form);
   let highestID = 0;
-  if (taskList.length > 0) {
+  if (taskList.length > 0){
     let sortedTaskList = getSortedTaskList('idinv');
     highestID = sortedTaskList[0].id;
   }
@@ -130,6 +130,9 @@ function addTask() {
   // Очистка формы
   task_form.querySelector('input[name="task-name"]').value = '';
   task_form.querySelector('input[name="task-date"]').value = '';
+  
+  // Фокус на поле ввода
+  task_form.querySelector('input[name="task-name"]').focus();
 }
 
 // REMOVE TASK
