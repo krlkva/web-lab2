@@ -75,6 +75,29 @@ function getSortedTaskList(sorttype) {
   return sortedTaskList;
 }
 
+// ADD TASK
+function addTask() {
+  let data = new FormData(task_form);
+  let highestID = 0;
+  if (taskList.length > 0) {
+    let sortedTaskList = getSortedTaskList('idinv');
+    highestID = sortedTaskList[0].id;
+  }
+  
+  taskList.push({
+    id: highestID + 1,
+    name: data.get('task-name'), 
+    date: data.get('task-date'),
+    status: 1
+  });
+  
+  updateTasks();
+  
+  // Очистка формы
+  task_form.querySelector('input[name="task-name"]').value = '';
+  task_form.querySelector('input[name="task-date"]').value = '';
+}
+
 // PAGE SETUP
 document.addEventListener('DOMContentLoaded', function() {
    // Создание структуры страницы
@@ -157,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
   task_form_submit.value = 'Добавить задачу';
   task_form.appendChild(task_form_submit);
   
-  task_form.addEventListener('submit', (event) => {
+    task_form.addEventListener('submit', (event) => {
     event.preventDefault(); 
     addTask();
   });
@@ -178,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // TASKS DISPLAY
 function updateTasks() {
+  localStorage.setItem('tasklist-test', JSON.stringify(taskList)); 
   listTasks();
 }
 
