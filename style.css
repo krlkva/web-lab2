@@ -479,7 +479,7 @@ nav ul {
 .task-status_inprogress .task__remove-btn {
     background-color: #ffc107;
     border-color: #ffc107;
-    color: #333;
+    color: white;
 }
 
 .task-status_done .task__remove-btn {
@@ -496,7 +496,7 @@ nav ul {
 
 .task-status_inprogress .task__edit-btn:hover {
     background-color: #ffc107;
-    color: #333;
+    color: white;
 }
 
 .task-status_done .task__edit-btn:hover {
