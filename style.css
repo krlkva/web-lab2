@@ -103,7 +103,7 @@ footer {
 .task-list {
     list-style: none;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 15px;
     padding: 0;
 }
@@ -435,6 +435,98 @@ footer {
     border-color: #1a1a1a;
 }
 
+/* Адаптивность */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    .task-settings {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .task-settings__left {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .task-settings__search {
+        min-width: auto;
+    }
+    
+    .site-name {
+        font-size: 28px;
+    }
+    
+    .task-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-name {
+        font-size: 24px;
+    }
+    
+    .task-settings__filter-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .task__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .task__buttons {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+
+
 .task-list li.over {
     border-top: 3px solid #1a1a1a !important;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.task-list li {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.task-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.task__edit-btn:hover {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.task__remove-btn:hover {
+    background-color: #d32f2f;
+    border-color: #d32f2f;
+}
+
+.task-form input[type="submit"]:hover {
+    background-color: #333;
+    border-color: #333;
+}
+
+.task-settings__sort button:hover {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.task-settings__search:focus-within {
+    border-color: #1a1a1a;
 }
