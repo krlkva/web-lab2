@@ -308,6 +308,87 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   task_search.appendChild(task_search_input);
 
+  const task_filter = document.createElement('fieldset');
+  task_filter.classList.add('task-settings__filter');
+  task_settings.appendChild(task_filter);
+
+  const task_filter_legend = document.createElement('div');
+  task_filter_legend.classList.add('task-settings__filter-legend');
+  task_filter.appendChild(task_filter_legend);
+  
+  const task_filter_legend_text = document.createElement('h2');
+  task_filter_legend_text.textContent = 'Фильтр по статусу';
+  task_filter_legend.appendChild(task_filter_legend_text);
+
+  const task_filter_buttons = document.createElement('section');
+  task_filter_buttons.classList.add('task-settings__filter-buttons');
+  task_filter.appendChild(task_filter_buttons);
+
+  // Новые
+  const task_filter_new = document.createElement('div');
+  task_filter_new.classList.add('task-filter__new');
+  task_filter_buttons.appendChild(task_filter_new);
+  
+  const task_filter_new_input = document.createElement('input');
+  task_filter_new_input.type = 'checkbox';
+  task_filter_new_input.name = 'task-filter-status';
+  task_filter_new_input.id = 'task-filter-status__new';
+  task_filter_new_input.value = 1;
+  task_filter_new_input.checked = 'checked';
+  task_filter_new.appendChild(task_filter_new_input);
+  
+  const task_filter_new_label = document.createElement('label');
+  task_filter_new_label.htmlFor = 'task-filter-status__new';
+  task_filter_new_label.textContent = 'новые';
+  task_filter_new.appendChild(task_filter_new_label);
+
+  // В процессе
+  const task_filter_inprogress = document.createElement('div');
+  task_filter_inprogress.classList.add('task-filter__inprogress');
+  task_filter_buttons.appendChild(task_filter_inprogress);
+  
+  const task_filter_inprogress_input = document.createElement('input');
+  task_filter_inprogress_input.type = 'checkbox';
+  task_filter_inprogress_input.name = 'task-filter-status';
+  task_filter_inprogress_input.id = 'task-filter-status__inprogress';
+  task_filter_inprogress_input.value = 2;
+  task_filter_inprogress_input.checked = 'checked';
+  task_filter_inprogress.appendChild(task_filter_inprogress_input);
+  
+  const task_filter_inprogress_label = document.createElement('label');
+  task_filter_inprogress_label.htmlFor = 'task-filter-status__inprogress';
+  task_filter_inprogress_label.textContent = 'в процессе';
+  task_filter_inprogress.appendChild(task_filter_inprogress_label);
+
+  // Выполнено
+  const task_filter_done = document.createElement('div');
+  task_filter_done.classList.add('task-filter__done');
+  task_filter_buttons.appendChild(task_filter_done);
+  
+  const task_filter_done_input = document.createElement('input');
+  task_filter_done_input.type = 'checkbox';
+  task_filter_done_input.name = 'task-filter-status';
+  task_filter_done_input.id = 'task-filter-status__done';
+  task_filter_done_input.value = 3;
+  task_filter_done.appendChild(task_filter_done_input);
+  
+  const task_filter_done_label = document.createElement('label');
+  task_filter_done_label.htmlFor = 'task-filter-status__done';
+  task_filter_done_label.textContent = 'выполнено';
+  task_filter_done.appendChild(task_filter_done_label);
+
+  // Обработчики фильтров
+  task_filter.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    checkbox.addEventListener('change', (event) => {
+      if (checkbox.checked) {
+        statusFilter[event.target.value - 1] = 1;
+      } else {
+        statusFilter[event.target.value - 1] = 0;
+      }
+      listTasks();
+    });
+  });
+
   // Список задач
   const task_list = document.createElement('ul');
   task_list.classList.add('task-list');
@@ -332,6 +413,9 @@ function listTasks() {
     // Фильтр по названию
     if (task.name.toUpperCase().indexOf(nameFilter.toUpperCase()) === -1) {
       continue;
+    }
+    if (statusFilter[task.status-1] == 0) {
+    continue;
     }
     
     let taskElem = document.createElement('li');
