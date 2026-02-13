@@ -11,7 +11,7 @@ let taskList = [
   { id: 8, name: 'ДЗ по английскому', date: "2026-02-12", status: 1 },
   { id: 9, name: 'Йога', date: "2026-02-18", status: 1 },
   { id: 10, name: 'Отнести телефон в сервис', date: "2026-02-08", status: 2 },
-];
+]; 
 
 let sorttype = "date";
 let nameFilter = "";
