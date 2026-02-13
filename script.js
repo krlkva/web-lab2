@@ -281,6 +281,33 @@ document.addEventListener('DOMContentLoaded', function() {
   task_window.classList.add('task-window');
   main_container.appendChild(task_window);
 
+  const task_settings = document.createElement('section');
+  task_settings.classList.add('task-settings');
+  task_window.appendChild(task_settings);
+  
+  // Поиск
+  const task_search = document.createElement('section');
+  task_search.classList.add('task-settings__search');
+  task_settings.appendChild(task_search);
+  
+  const task_search_label = document.createElement('div');
+  task_search_label.classList.add('task-settings__search-icon');
+  task_search.appendChild(task_search_label);
+  
+  const task_search_icon = document.createElement('i');
+  task_search_icon.className = 'fas fa-search';
+  task_search_icon.style.color = '#666';
+  task_search_label.appendChild(task_search_icon);
+  
+  const task_search_input = document.createElement('input');
+  task_search_input.type = 'text';
+  task_search_input.placeholder = 'Поиск задач...';
+  task_search_input.addEventListener('keyup', (event) => {
+    nameFilter = event.target.value.trim(); 
+    listTasks();
+  });
+  task_search.appendChild(task_search_input);
+
   // Список задач
   const task_list = document.createElement('ul');
   task_list.classList.add('task-list');
@@ -302,6 +329,11 @@ function listTasks() {
   let sortedTaskList = getSortedTaskList(sorttype);
   
   for (let task of sortedTaskList) {
+    // Фильтр по названию
+    if (task.name.toUpperCase().indexOf(nameFilter.toUpperCase()) === -1) {
+      continue;
+    }
+    
     let taskElem = document.createElement('li');
     taskElem.setAttribute('index', task.id);
     setTaskDOM(task, taskElem);
