@@ -98,6 +98,16 @@ function addTask() {
   task_form.querySelector('input[name="task-date"]').value = '';
 }
 
+// REMOVE TASK
+function removeTask(id) {
+  let item = taskList.find(item => item.id === parseInt(id));
+  if (item === undefined) return;
+  
+  let n = taskList.indexOf(item);
+  taskList.splice(n, 1);
+  updateTasks();
+}
+
 // PAGE SETUP
 document.addEventListener('DOMContentLoaded', function() {
    // Создание структуры страницы
@@ -216,6 +226,7 @@ function listTasks() {
     let taskElem = document.createElement('li');
     taskElem.setAttribute('index', task.id);
     setTaskDOM(task, taskElem);
+    setTaskListeners(task, taskElem);
     listUL_clone.appendChild(taskElem);
   }
   
@@ -240,6 +251,15 @@ function setTaskDOM(task, taskElem) {
   task_date.textContent = task.date;
   task_info.appendChild(task_date);
 
+  let task_buttons = document.createElement('div');
+  task_buttons.classList.add('task__buttons');
+  task_bottom.appendChild(task_buttons);
+
+  let task_remove = document.createElement('button');
+  task_remove.classList.add('task__remove-btn');
+  task_remove.textContent = 'Удалить';
+  task_buttons.appendChild(task_remove);
+  
   let task_bottom = document.createElement('div');
   task_bottom.classList.add('task__bottom');
   task_card.appendChild(task_bottom);
@@ -247,4 +267,11 @@ function setTaskDOM(task, taskElem) {
   let task_id = document.createElement('span');
   task_id.textContent = '#' + task.id;
   task_bottom.appendChild(task_id);
+}
+
+// TASK LISTENERS
+function setTaskListeners(task, taskElem) {
+  taskElem.querySelector('.task__remove-btn').addEventListener('click', () => {
+    removeTask(task.id);
+  });
 }
