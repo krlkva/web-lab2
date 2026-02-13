@@ -236,3 +236,64 @@ footer {
     font-size: 14px;
     color: #999;
 }
+
+.task-status__form {
+    margin-top: 10px;
+}
+
+.task-status__form fieldset {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.task-status__form legend {
+    font-size: 14px;
+    color: #666;
+    padding: 0 5px;
+}
+
+.task-status__form div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.task-status__form input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.task-status__form label {
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+}
+
+/* Цвета статусов */
+.task-container_new {
+    border-left: 4px solid #f44336;
+}
+
+.task-container_inprogress {
+    border-left: 4px solid #ffc107;
+}
+
+.task-container_done {
+    border-left: 4px solid #4caf50;
+}
+
+.task-status_new .task__info span:first-child {
+    color: #f44336;
+}
+
+.task-status_inprogress .task__info span:first-child {
+    color: #ff8f00;
+}
+
+.task-status_done .task__info span:first-child {
+    color: #2e7d32;
+    text-decoration: line-through;
+}
