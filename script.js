@@ -251,6 +251,62 @@ function updateSortButtons() {
   localStorage.setItem('sorttype', JSON.stringify(sorttype)); 
 }
 
+// DRAG AND DROP
+let dragStartID;
+
+function dragStart() {
+  dragStartID = +this.closest('li').getAttribute('index');
+  this.classList.add('dragging');
+}
+
+function dragEnter() {
+  this.classList.add('over');
+}
+
+function dragLeave() {
+  this.classList.remove('over');
+}
+
+function dragOver(e) {
+  e.preventDefault();
+}
+
+function dragDrop(e) {
+  let dragEnd = this;
+  if (!dragEnd.classList.contains('task-list') && !dragEnd.closest('li')) {
+    return;
+  }
+  
+  let dragEndID = +this.getAttribute('index');
+  this.classList.remove('over');
+  
+  if (dragStartID && dragEndID) {
+    insertBefore(dragStartID, dragEndID);
+  }
+}
+
+function insertBefore(movingID, beforeID) {
+  taskList = getSortedTaskList('id');
+  let item1 = taskList.find(item => item.id === parseInt(movingID));
+  let item2 = taskList.find(item => item.id === parseInt(beforeID));
+  
+  if (item1 != undefined && item2 != undefined) {
+    let n1 = taskList.indexOf(item1);
+    let n2 = taskList.indexOf(item2);
+    
+    if (n1 !== n2) {
+      taskList.splice(n2, 0, taskList.splice(n1, 1)[0]);
+      
+      // Обновляем ID
+      for (let i = 0; i < taskList.length; i++) {
+        taskList[i].id = i + 1;
+      }
+      
+      updateTasks();
+    }
+  }
+}
+
 // PAGE SETUP
 document.addEventListener('DOMContentLoaded', function() {
    // Создание структуры страницы
@@ -632,9 +688,19 @@ function setTaskDOM(task, taskElem) {
 
 // TASK LISTENERS
 function setTaskListeners(task, taskElem) {
+  // Включаем drag-and-drop только при сортировке по ID
+  if (sorttype === 'id' || sorttype === 'idinv') {
+    taskElem.draggable = true;
+    taskElem.addEventListener('dragstart', dragStart);
+    taskElem.addEventListener('drop', dragDrop);
+    taskElem.addEventListener('dragover', dragOver);
+    taskElem.addEventListener('dragenter', dragEnter);
+    taskElem.addEventListener('dragleave', dragLeave);
+  }
+
   taskElem.querySelector('.task__edit-btn').addEventListener('click', () => {
     if (taskElem.classList.contains('form-opened')) {
-      removeEditForm();
+      removeEditForm(task.id);
       taskElem.classList.remove('form-opened');
     } else {
       createEditForm(task, taskElem);
