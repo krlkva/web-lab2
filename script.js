@@ -108,6 +108,76 @@ function removeTask(id) {
   updateTasks();
 }
 
+// EDIT TASK
+function updateTask(id, event) {
+  let item = taskList.find(item => item.id === parseInt(id));
+  if (item === undefined) return;
+  
+  const data = new FormData(event.target);
+  if (data.get('name') != '') {
+    item.name = data.get('name');
+  }
+  if (data.get('date') != '') {
+    item.date = data.get('date');
+  }
+  updateTasks();
+}
+
+function createEditForm(task, taskElem) {
+  if (document.body.classList.contains('stop-scrolling')) return;
+  
+  let edit_form_container = document.createElement('div');
+  edit_form_container.classList.add('edit-form-container');
+  document.body.appendChild(edit_form_container);
+  document.body.classList.add('stop-scrolling');
+
+  let edit_form = document.createElement('form');
+  edit_form.id = 'edit_form' + task.id;
+  edit_form_container.appendChild(edit_form);
+
+  let edit_form_close = document.createElement('button');
+  edit_form_close.type = 'button';
+  edit_form_close.textContent = 'Закрыть';
+  edit_form.appendChild(edit_form_close);
+  
+  edit_form_close.addEventListener('click', () => {
+    taskElem.classList.remove('form-opened');
+    removeEditForm();
+    document.body.classList.remove('stop-scrolling');
+  });
+
+  let edit_form_name = document.createElement('input');
+  edit_form_name.type = 'text';
+  edit_form_name.name = 'name';
+  edit_form_name.value = task.name;
+  edit_form.appendChild(edit_form_name);
+
+  let edit_form_date = document.createElement('input');
+  edit_form_date.type = 'date';
+  edit_form_date.name = 'date';
+  edit_form_date.value = task.date;
+  edit_form.appendChild(edit_form_date);
+
+  let edit_form_submit = document.createElement('input');
+  edit_form_submit.type = 'submit';
+  edit_form_submit.value = 'Сохранить изменения';
+  edit_form.appendChild(edit_form_submit);
+
+  edit_form.addEventListener('submit', (event) => {
+    event.preventDefault(); 
+    updateTask(task.id, event);
+    removeEditForm();
+    document.body.classList.remove('stop-scrolling');
+  });
+}
+
+function removeEditForm() {
+  const forms = document.getElementsByClassName('edit-form-container');
+  while (forms.length > 0) {
+    forms[0].parentNode.removeChild(forms[0]);
+  }
+}
+
 // PAGE SETUP
 document.addEventListener('DOMContentLoaded', function() {
    // Создание структуры страницы
@@ -255,6 +325,11 @@ function setTaskDOM(task, taskElem) {
   task_buttons.classList.add('task__buttons');
   task_bottom.appendChild(task_buttons);
 
+  let task_edit = document.createElement('button');
+  task_edit.classList.add('task__edit-btn');
+  task_edit.textContent = 'Редактировать';
+  task_buttons.appendChild(task_edit);
+
   let task_remove = document.createElement('button');
   task_remove.classList.add('task__remove-btn');
   task_remove.textContent = 'Удалить';
@@ -271,6 +346,16 @@ function setTaskDOM(task, taskElem) {
 
 // TASK LISTENERS
 function setTaskListeners(task, taskElem) {
+  taskElem.querySelector('.task__edit-btn').addEventListener('click', () => {
+    if (taskElem.classList.contains('form-opened')) {
+      removeEditForm();
+      taskElem.classList.remove('form-opened');
+    } else {
+      createEditForm(task, taskElem);
+      taskElem.classList.add('form-opened');
+    }
+  });
+
   taskElem.querySelector('.task__remove-btn').addEventListener('click', () => {
     removeTask(task.id);
   });
