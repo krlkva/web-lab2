@@ -373,3 +373,50 @@ footer {
     cursor: pointer;
     color: #666;
 }
+
+.task-settings__left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.task-settings__sort {
+    display: flex;
+    gap: 10px;
+}
+
+.task-settings__sort button {
+    padding: 8px 16px;
+    border: 2px solid #1a1a1a;
+    background: transparent;
+    color: #1a1a1a;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.task-settings__sort button:hover {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.sort_active {
+    background-color: #1a1a1a !important;
+    color: white !important;
+}
+
+.sort_active-inv {
+    background-color: #333 !important;
+    color: white !important;
+}
+
+.sort_active::after {
+    content: " ↑";
+    font-weight: bold;
+}
+
+.sort_active-inv::after {
+    content: " ↓";
+    font-weight: bold;
+}
