@@ -1,4 +1,4 @@
-# To-Do list
+# To-Do list Королькова Елизавета
 
 [Деплой](https://krlkva.github.io/web-lab2/)
 
@@ -12,7 +12,7 @@
 
 
 1. HTML-файл содержит исключительно базовый каркас и подключение скрипта.
-(картинка)
+![](https://github.com/krlkva/web-lab2/blob/main/report%202/1.jpg)
 2. Элементы страницы создаются через JavaScript с использованием семантических тегов.
 3. Текст, атрибуты и стили применены через JavaScript.
 
@@ -23,26 +23,26 @@
 5. Применён адаптивный дизайн через CSS (flex/grid), корректное отображение на разных устройствах.
 
 Примеры отображения сайта при разной ширине экрана:
-(картинка)
-(картинка)
-(картинка)
-(картинка)
+![](https://github.com/krlkva/web-lab2/blob/main/report%202/2.jpg)
+![](https://github.com/krlkva/web-lab2/blob/main/report%202/3.jpg)
+![](https://github.com/krlkva/web-lab2/blob/main/report%202/4.jpg)
+![](https://github.com/krlkva/web-lab2/blob/main/report%202/5.jpg)
 
 Логика приложения
 1. Реализовано добавление новой задачи в список.
 2. Реализовано удаление задачи из списка.
 3. Реализовано редактирование задачи (текст и дата).
-   (картинка)
+ ![](https://github.com/krlkva/web-lab2/blob/main/report%202/6.jpg)
 4. Реализована отметка задачи как выполненной с визуальным оформлением.
-   (картинка)
+ ![](https://github.com/krlkva/web-lab2/blob/main/report%202/7.jpg)
 5. Реализована сортировка задач по дате.
 6. Реализована фильтрация задач по статусу (выполнено/невыполнено).
-   (картинка)
-   (картинка)
-   (картинка)
+  ![](https://github.com/krlkva/web-lab2/blob/main/report%202/8.jpg)
+  ![](https://github.com/krlkva/web-lab2/blob/main/report%202/9.jpg)
+  ![](https://github.com/krlkva/web-lab2/blob/main/report%202/10.jpg)
 7. Реализован поиск задач по названию.
 8. Обеспечено сохранение задач в localStorage и восстановление при загрузке страницы.
 9. Возможность менять порядок задач с помощью drag-and-drop.
 В данной реализации drag-and-drop только работает, если сортировка выставлена на ID, т.к. при drag-and-drop меняется порядок по ID.
 
-Видео с работоспособностью
+[Видео с работоспособностью](https://disk.yandex.ru/i/NKAHvaZCbvp0AQ)
